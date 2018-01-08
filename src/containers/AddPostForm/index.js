@@ -1,8 +1,9 @@
 // AddPost
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
-import { Button, Form, Message } from 'semantic-ui-react';
+import { Form, Button, Message } from 'semantic-ui-react';
 
 import { add_post } from '../../actions/posts.actions'
 
@@ -30,9 +31,8 @@ class AddPost extends Component {
     let error_visible = error && touched;
     return (
       <div>
-        <Form.Input
+        <Form.TextArea
           className={ error && touched ? 'error' : ''}
-          as='textarea'
           { ...field.input }
         />
         {error_visible ? (<Message negative content={touched ? error : ''} />) : null}
@@ -66,9 +66,10 @@ class AddPost extends Component {
             name='content'
             component={this.render_text_area}/>
           </Form.Field>
-          <Button className='ui primary' type='submit'>
+          <Form.Button as={ Button } className='ui primary' type='submit'>
             Submit Post
-          </Button>
+          </Form.Button>
+          <Button negative as={ Link } to='/'>Cancel</Button>
         </Form>
       </div>
     );
@@ -76,13 +77,19 @@ class AddPost extends Component {
 
 };
 
-const validate = function({ title }){
+const validate = function({ title, content }){
   const errors = {};
   if (!title) {
     errors['title'] = 'Please enter a value for the post title';
   }
   if (title && title.length < 3) {
     errors['title'] = 'Please enter at least three characters';
+  }
+  if (!content) {
+    errors['content'] = 'Please enter a value for the post content';
+  }
+  if (content && content.length < 3) {
+    errors['content'] = 'Please enter at least 3 characters';
   }
   return errors;
 };
