@@ -1,3 +1,8 @@
 {
-  "posts": []
+  "posts": [
+    {
+      "text": "New Post",
+      "id": 1
+    }
+  ]
 }
