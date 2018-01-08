@@ -1,4 +1,4 @@
-import { API_ERROR } from '../actions/ui.actions'
+import { API_ERROR, DISMISS_ERROR } from '../actions/ui.actions'
 const default_state = {
   error: {}
 }
@@ -9,8 +9,13 @@ export default function (state = default_state, action = {}){
       return {
         ...state,
         error: payload
-      }
+      };
+    case DISMISS_ERROR:
+      return {
+        ...state,
+        error: {}
+      };
     default:
       return state
-  };
+  }
 };
