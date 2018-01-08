@@ -25,7 +25,7 @@ export default function (state = {}, action = {}) {
       return {
         ...state,
         fetching: false,
-        posts: _.map(payload.data, 'id')
+        entities: _.mapKeys(payload, 'id')
       };
     default:
       return state;
