@@ -1,99 +1,114 @@
 // AddPost
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
-import { Form, Button, Message } from 'semantic-ui-react';
+import { Form, Button, Message, Label } from 'semantic-ui-react';
 
-import { add_post } from '../../actions/posts.actions'
+import { addPost } from '../../actions/posts.actions';
+
+const renderTextInput = (field) => {
+  const { meta: { error, touched } } = field;
+  const errorVisible = error && touched;
+  return (
+    <div>
+      <Form.Input
+        className={error && touched ? 'error' : ''}
+        type="text"
+        {...field.input}
+      />
+      {errorVisible ? (<Message negative content={touched ? error : ''} />) : null}
+    </div>
+  );
+};
+const renderTextArea = (field) => {
+  const { meta: { error, touched } } = field;
+  const errorVisible = error && touched;
+  return (
+    <div>
+      <Form.TextArea
+        className={error && touched ? 'error' : ''}
+        {...field.input}
+      />
+      {errorVisible ? (<Message negative content={touched ? error : ''} />) : null}
+    </div>
+  );
+};
 
 class AddPost extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  render_text_input(field){
-    const {meta: {error, touched}} = field;
-    let error_visible = error && touched;
-    return (
-      <div>
-        <Form.Input
-          className={ error && touched ? 'error' : ''}
-          type='text'
-          { ...field.input }
-        />
-        {error_visible ? (<Message negative content={touched ? error : ''} />) : null}
-      </div>
-    );
+  onSubmit(post) {
+    this.props.addPost(post);
   }
-  render_text_area(field){
-    const {meta: {error, touched}} = field;
-    let error_visible = error && touched;
-    return (
-      <div>
-        <Form.TextArea
-          className={ error && touched ? 'error' : ''}
-          { ...field.input }
-        />
-        {error_visible ? (<Message negative content={touched ? error : ''} />) : null}
-      </div>
-    );
-  }
-  onSubmit(new_post_data){
-    this.props.add_post(new_post_data);
-  }
-  render(){
+  render() {
     const { handleSubmit } = this.props;
     return (
       <div>
         <h1>New Post Form</h1>
         <Form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <Form.Field>
-            <label>Title</label>
+            <Label pointing="below">Title</Label>
             <Field
-            name='title'
-            component={this.render_text_input}/>
+              name="title"
+              component={renderTextInput}
+            />
           </Form.Field>
           <Form.Field>
-            <label>Tags</label>
+            <Label pointing="below">Tags</Label>
             <Field
-            name='tags'
-            component={this.render_text_input}/>
+              name="tags"
+              component={renderTextInput}
+            />
           </Form.Field>
           <Form.Field>
-            <label>Content</label>
+            <Label pointing="below">Content</Label>
             <Field
-            name='content'
-            component={this.render_text_area}/>
+              name="content"
+              component={renderTextArea}
+            />
           </Form.Field>
-          <Form.Button as={ Button } className='ui primary' type='submit'>
+          <Form.Button as={Button} className="ui primary" type="submit">
             Submit Post
           </Form.Button>
-          <Button negative as={ Link } to='/'>Cancel</Button>
+          <Button
+            negative
+            as={Link}
+            to="/"
+          >
+            Cancel
+          </Button>
         </Form>
       </div>
     );
-  };
+  }
+}
 
-};
-
-const validate = function({ title, content }){
+const validate = ({ title, content }) => {
   const errors = {};
   if (!title) {
-    errors['title'] = 'Please enter a value for the post title';
+    errors.title = 'Please enter a value for the post title';
   }
   if (title && title.length < 3) {
-    errors['title'] = 'Please enter at least three characters';
+    errors.title = 'Please enter at least three characters';
   }
   if (!content) {
-    errors['content'] = 'Please enter a value for the post content';
+    errors.content = 'Please enter a value for the post content';
   }
   if (content && content.length < 3) {
-    errors['content'] = 'Please enter at least 3 characters';
+    errors.content = 'Please enter at least 3 characters';
   }
   return errors;
 };
 
-const connected = connect(null, { add_post })(AddPost);
-const form = reduxForm({ validate, form: 'add_post_form' })(connected);
-export default form
+AddPost.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  addPost: PropTypes.func.isRequired,
+};
+
+const connected = connect(null, { addPost })(AddPost);
+const form = reduxForm({ validate, form: 'addPost_form' })(connected);
+export default form;

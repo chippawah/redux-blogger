@@ -1,40 +1,48 @@
 // Nav
-import _ from 'lodash'
-import React, { Component } from 'react';
+import _ from 'lodash';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Menu, Message } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-import { dismiss_error } from '../../actions/ui.actions';
+import { dismissError } from '../../actions/ui.actions';
 
-class Nav extends Component {
-  render(){
-    return (
-      <div>
-        <Menu>
-          <Menu.Item as={Link} to='/'>
-              See All Posts
-          </Menu.Item>
-          <Menu.Item as={Link} to='/add-post'>
-              Add A New Post
-          </Menu.Item>
-        </Menu>
-        { _.isEmpty(this.props.ui.error) ? null :
+function Nav(props) {
+  return (
+    <div>
+      <Menu inverted>
+        <Menu.Item as={Link} to="/">
+            See All Posts
+        </Menu.Item>
+        <Menu.Item as={Link} to="/add-post">
+            Add A New Post
+        </Menu.Item>
+      </Menu>
+      {
+        _.isEmpty(props.error) ?
+          null :
           <Message
             negative
-            onDismiss={ this.props.dismiss_error }
-            header='API Error!'
-            content={ this.props.ui.error.message } /> }
-      </div>
-    );
-  };
-};
+            onDismiss={props.dismissError}
+            header="API Error!"
+            content={props.error.message}
+          />
+      }
+    </div>
+  );
+}
 
 const mapStateToProps = (state) => {
-  const { ui } = state;
-  return { ui };
+  const { ui: { error } } = state;
+  return { error };
 };
 
-const connected = connect(mapStateToProps, { dismiss_error })(Nav);
+Nav.propTypes = {
+  error: PropTypes.shape({ message: PropTypes.string }).isRequired,
+  dismissError: PropTypes.func.isRequired,
+};
 
-export default connected
+const connected = connect(mapStateToProps, { dismissError })(Nav);
+
+export default connected;
