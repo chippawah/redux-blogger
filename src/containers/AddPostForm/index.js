@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import { Form, Button, Message } from 'semantic-ui-react';
 
-import { add_post } from '../../actions/posts.actions'
+import { addPost } from '../../actions/posts.actions';
 
 class AddPost extends Component {
   constructor(props){
@@ -26,7 +26,7 @@ class AddPost extends Component {
       </div>
     );
   }
-  render_text_area(field){
+  renderTextArea(field){
     const {meta: {error, touched}} = field;
     let error_visible = error && touched;
     return (
@@ -39,10 +39,10 @@ class AddPost extends Component {
       </div>
     );
   }
-  onSubmit(new_post_data){
-    this.props.add_post(new_post_data);
+  onSubmit(post) {
+    this.props.addPost(post);
   }
-  render(){
+  render() {
     const { handleSubmit } = this.props;
     return (
       <div>
@@ -64,7 +64,7 @@ class AddPost extends Component {
             <label>Content</label>
             <Field
             name='content'
-            component={this.render_text_area}/>
+            component={this.renderTextArea}/>
           </Form.Field>
           <Form.Button as={ Button } className='ui primary' type='submit'>
             Submit Post
@@ -73,27 +73,26 @@ class AddPost extends Component {
         </Form>
       </div>
     );
-  };
+  }
+}
 
-};
-
-const validate = function({ title, content }){
+const validate = ({ title, content }) => {
   const errors = {};
   if (!title) {
-    errors['title'] = 'Please enter a value for the post title';
+    errors.title = 'Please enter a value for the post title';
   }
   if (title && title.length < 3) {
-    errors['title'] = 'Please enter at least three characters';
+    errors.title = 'Please enter at least three characters';
   }
   if (!content) {
-    errors['content'] = 'Please enter a value for the post content';
+    errors.content = 'Please enter a value for the post content';
   }
   if (content && content.length < 3) {
-    errors['content'] = 'Please enter at least 3 characters';
+    errors.content = 'Please enter at least 3 characters';
   }
   return errors;
 };
 
-const connected = connect(null, { add_post })(AddPost);
-const form = reduxForm({ validate, form: 'add_post_form' })(connected);
-export default form
+const connected = connect(null, { addPost })(AddPost);
+const form = reduxForm({ validate, form: 'addPost_form' })(connected);
+export default form;

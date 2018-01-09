@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-import { api_error } from './ui.actions';
+import { apiError } from './ui.actions';
 
 // ADD actions
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
-export function add_post_success({ data }) {
+export function addPost_success({ data }) {
   console.log('RESPONSE DATA', data);
   return {
     type: ADD_POST_SUCCESS,
@@ -13,22 +13,22 @@ export function add_post_success({ data }) {
 };
 
 export const ADD_POST = 'ADD_POST'
-export function add_post(new_post) {
+export function addPost(new_post) {
   return (dispatch) => {
     const type = ADD_POST
     dispatch({ type });
     const request = axios.post('/api/posts', new_post)
-    request.then((res) => { dispatch(add_post_success(res)) });
+    request.then((res) => { dispatch(addPost_success(res)) });
     request.catch((error) => {
       const message = 'Whoops, the post could not be added...';
-      dispatch(api_error({ message, type, error }));
+      dispatch(apiError({ message, type, error }));
     });
   };
 };
 
  // FETCH actions
 export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS';
-export function fetch_posts_success({ data }) {
+export function fetchPosts_success({ data }) {
   return {
     type: FETCH_POSTS_SUCCESS,
     payload: data
@@ -36,15 +36,15 @@ export function fetch_posts_success({ data }) {
 };
 
 export const FETCH_POSTS = 'FETCH_POSTS';
-export function fetch_posts() {
+export function fetchPosts() {
   return (dispatch) => {
     const type = FETCH_POSTS
     dispatch({ type });
     const request = axios.get('/api/posts');
-    request.then((res) => { dispatch(fetch_posts_success(res)) });
+    request.then((res) => { dispatch(fetchPosts_success(res)) });
     request.catch((error) => {
       const message = 'Uh oh! Something went wrong fetching the posts...';
-      dispatch(api_error({ message, type, error }));
+      dispatch(apiError({ message, type, error }));
     });
   };
 };

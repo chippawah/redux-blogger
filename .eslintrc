@@ -1,0 +1,18 @@
+{
+  "extends": "airbnb",
+  "plugins": ["react"],
+  "rules": {
+    # Allows JSX in JS Files
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    # Does not look for href tag in react-router Link component
+    "jsx-a11y/anchor-is-valid": ["error", {
+      "components": ["Link"],
+      "specialLink": ["to","hrefLeft","hrefRight"],
+      "aspects": ["noHref", "invalidHref","preferButton"]
+    }],
+    # No objection to importing components linked with HOC connect
+    # see https://github.com/benmosher/eslint-plugin-import/issues/544
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0
+  }
+}
