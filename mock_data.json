@@ -1,22 +1,15 @@
 {
   "posts": [
     {
-      "title": "foo bar",
-      "tags": "some_tag",
-      "content": "Some super cool content",
-      "id": 2
-    },
-    {
-      "title": "new thing",
-      "tags": "hjlsdhf",
-      "content": "ljaskhdflksadhjf",
-      "id": 3
-    },
-    {
       "title": "React Apps",
       "tags": "react, node, web",
       "content": "ljafdhflaksjfh",
       "id": 4
+    },
+    {
+      "title": "Blogs",
+      "content": "Some stuff about blogs...",
+      "id": 5
     }
   ]
 }

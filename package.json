@@ -26,7 +26,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "mock": "json-server --routes mock_routes.json --watch mock_data.json --port 5000"
+    "mock": "json-server --routes mock_routes.json --watch mock_data.json --port 5000",
+    "dev": "npm run mock & npm run start"
   },
   "proxy": {
     "/api/*": {
