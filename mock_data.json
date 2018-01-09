@@ -1,15 +1,19 @@
 {
   "posts": [
     {
-      "title": "React Apps",
-      "tags": "react, node, web",
-      "content": "ljafdhflaksjfh",
-      "id": 4
-    },
-    {
       "title": "Blogs",
       "content": "Some stuff about blogs...",
       "id": 5
+    },
+    {
+      "title": "Semantic UI Apps",
+      "content": "These are really pretty",
+      "id": 7
+    },
+    {
+      "title": "React Apps",
+      "content": "They render real quick",
+      "id": 8
     }
   ]
 }

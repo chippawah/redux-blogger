@@ -42,7 +42,9 @@ class AddPost extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   onSubmit(post) {
-    this.props.addPost(post);
+    return this.props.addPost(post, () => {
+      this.props.history.push({ pathname: '/' });
+    });
   }
   render() {
     const { handleSubmit } = this.props;
@@ -110,5 +112,5 @@ AddPost.propTypes = {
 };
 
 const connected = connect(null, { addPost })(AddPost);
-const form = reduxForm({ validate, form: 'addPost_form' })(connected);
+const form = reduxForm({ validate, form: 'addPostForm' })(connected);
 export default form;
