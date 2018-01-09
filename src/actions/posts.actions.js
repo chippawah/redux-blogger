@@ -43,11 +43,8 @@ export function fetch_posts() {
     const request = axios.get('/api/posts');
     request.then((res) => { dispatch(fetch_posts_success(res)) });
     request.catch((error) => {
-      dispatch(api_error({
-        message: 'Uh oh! Something went wrong fetching the posts...',
-        type,
-        error
-      }))
+      const message = 'Uh oh! Something went wrong fetching the posts...';
+      dispatch(api_error({ message, type, error }));
     });
   };
 };
