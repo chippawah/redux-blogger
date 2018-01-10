@@ -1,14 +1,14 @@
 export const API_ERROR = 'API_ERROR';
-export function apiError(error_details) {
+export function apiError(details) {
   return {
     type: API_ERROR,
-    payload: error_details
-  }
-};
+    payload: details,
+  };
+}
 
 export const DISMISS_ERROR = 'DISMISS_ERROR';
-export function dismissError(error_details) {
+export function dismissError() {
   return {
-    type: DISMISS_ERROR
-  }
-};
+    type: DISMISS_ERROR,
+  };
+}

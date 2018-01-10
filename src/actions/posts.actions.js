@@ -18,7 +18,6 @@ export function selectPost(id) {
 // ADD actions
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export function addPostSuccess({ data }) {
-  console.log('RESPONSE DATA', data);
   return {
     type: ADD_POST_SUCCESS,
     payload: data,
