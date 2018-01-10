@@ -9,16 +9,11 @@ import {
   Divider,
 } from 'semantic-ui-react';
 
-import { fetchPosts } from '../../actions/posts.actions';
+import { fetchPosts, selectPost } from '../../actions/posts.actions';
 
 class PostsList extends Component {
   componentDidMount() {
     this.props.fetchPosts();
-  }
-  selectPost(id) {
-    this.props.history.push({
-      pathname: `/posts/${id}`,
-    });
   }
   renderList(posts) {
     const elements = [];
@@ -27,7 +22,7 @@ class PostsList extends Component {
         const element = (
           <List.Item
             key={post.id}
-            onClick={() => { this.selectPost(post.id); }}
+            onClick={() => { this.props.selectPost(post.id); }}
           >
             <List.Content>
               <List.Header>{ post.title }</List.Header>
@@ -61,14 +56,12 @@ const mapStateToProps = (state) => {
   return { posts };
 };
 
-const connected = connect(mapStateToProps, { fetchPosts })(PostsList);
+const connected = connect(mapStateToProps, { selectPost, fetchPosts })(PostsList);
 
 PostsList.propTypes = {
   fetchPosts: PropTypes.func.isRequired,
+  selectPost: PropTypes.func.isRequired,
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default connected;

@@ -1,12 +1,16 @@
 import { combineReducers } from 'redux';
-import PostsReducer from './posts.reducer';
-import UIReducer from './ui.reducer';
-import { reducer as form_reducer } from 'redux-form'
+import { reducer as formReducer } from 'redux-form';
+import { routerReducer } from 'react-router-redux';
+
+import postsReducer from './posts.reducer';
+import uiReducer from './ui.reducer';
+
 
 const rootReducer = combineReducers({
-  ui: UIReducer,
-  posts: PostsReducer,
-  form: form_reducer
+  ui: uiReducer,
+  posts: postsReducer,
+  form: formReducer,
+  router: routerReducer,
 });
 
 export default rootReducer;
